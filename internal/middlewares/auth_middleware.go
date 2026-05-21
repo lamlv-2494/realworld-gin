@@ -3,8 +3,8 @@ package middlewares
 import (
 	"net/http"
 
-	"realworld-gin/internal/utils"
 	"realworld-gin/internal/utils/constants"
+	"realworld-gin/internal/utils/jwt"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -24,7 +24,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		userID, err := utils.ValidateToken(part[1])
+		userID, err := jwt.ValidateToken(part[1])
 		if err != nil {
 			abort(ctx, err.Error())
 			return
@@ -51,7 +51,7 @@ func OptionalAuthMiddleware() gin.HandlerFunc {
 			parts := strings.Split(authHeader, " ")
 
 			if len(parts) == 2 && parts[0] == constants.Token {
-				userID, err := utils.ValidateToken(parts[1])
+				userID, err := jwt.ValidateToken(parts[1])
 				if err == nil {
 					ctx.Set(constants.UserId, userID)
 				}

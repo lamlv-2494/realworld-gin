@@ -1,4 +1,4 @@
-package utils
+package slug_gen
 
 import (
 	"math/rand"

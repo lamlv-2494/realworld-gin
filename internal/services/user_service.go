@@ -5,8 +5,8 @@ import (
 	"realworld-gin/internal/models/dto/requests"
 	"realworld-gin/internal/models/dto/responses"
 	"realworld-gin/internal/repositories"
-	"realworld-gin/internal/utils"
 	"realworld-gin/internal/utils/constants"
+	"realworld-gin/internal/utils/jwt"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -70,7 +70,7 @@ func (u *userService) Login(req requests.LoginRequest) (*responses.UserResponse,
 		return nil, ErrInvalidPassword
 	}
 
-	token, err := utils.GenerateToken(user.ID)
+	token, err := jwt.GenerateToken(user.ID)
 	if err != nil {
 		return nil, err
 	}

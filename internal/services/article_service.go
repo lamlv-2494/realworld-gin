@@ -4,8 +4,8 @@ import (
 	"realworld-gin/internal/models"
 	"realworld-gin/internal/models/dto/responses"
 	"realworld-gin/internal/repositories"
-	"realworld-gin/internal/utils"
 	"realworld-gin/internal/utils/constants"
+	"realworld-gin/internal/utils/slug_gen"
 )
 
 type ArticleService interface {
@@ -45,7 +45,7 @@ func (a *articleService) CreateArticle(authorID uint, title string, description 
 		return nil, ErrUserNotFound
 	}
 
-	slug := utils.GenerateSlug(title)
+	slug := slug_gen.GenerateSlug(title)
 
 	var tags []*models.Tag
 	for _, tagName := range tagList {
@@ -150,7 +150,7 @@ func (a *articleService) UpdateArticle(currentUserID uint, slug string, data map
 	}
 
 	if title, ok := data[constants.Title]; ok {
-		newSlug := utils.GenerateSlug(title.(string))
+		newSlug := slug_gen.GenerateSlug(title.(string))
 		data[constants.Slug] = newSlug
 	}
 
