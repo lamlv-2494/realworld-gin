@@ -24,4 +24,5 @@ var (
 	ErrInvalidPassword  = errors.New("Invalid email or password")
 	ErrUpdateUser       = errors.New("Failed to update user")
 	ErrCreateUserFailed = errors.New("Failed to create user")
+	ErrGenerateToken    = errors.New("Failed to generate token")
 )

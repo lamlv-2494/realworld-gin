@@ -29,6 +29,11 @@ func (s *commentService) CreateComment(currentUserID uint, slug string, body str
 		return nil, ErrArticleNotFound
 	}
 
+	author, err := s.userRepo.FindByID(currentUserID)
+	if err != nil {
+		return nil, ErrUserNotFound
+	}
+
 	comment := &models.Comment{
 		Body:      body,
 		ArticleID: article.ID,
@@ -37,11 +42,6 @@ func (s *commentService) CreateComment(currentUserID uint, slug string, body str
 
 	if err := s.commentRepo.CreateComment(comment); err != nil {
 		return nil, ErrCreateComment
-	}
-
-	author, err := s.userRepo.FindByID(currentUserID)
-	if err != nil {
-		return nil, ErrUserNotFound
 	}
 
 	commentResponse := &responses.CommentResponse{

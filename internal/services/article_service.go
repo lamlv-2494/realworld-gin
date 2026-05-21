@@ -254,7 +254,7 @@ func (a *articleService) FeedArticle(currentUserID uint, limit int, page int) (*
 
 	articles, totalCount, err := a.articleRepo.FeedArticle(currentUserID, limit, offset)
 	if err != nil {
-		return nil, err
+		return nil, ErrArticleFeedNotFound
 	}
 
 	var articlesResponse []responses.ArticleResponse

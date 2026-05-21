@@ -27,7 +27,7 @@ func NewFavoriteService(
 func (f *favoriteService) Favorite(currentUserID uint, slug string) error {
 	user, err := f.userRepo.FindByID(currentUserID)
 	if err != nil {
-		return err
+		return ErrUserNotFound
 	}
 
 	article, err := f.articleRepo.FindBySlug(slug)

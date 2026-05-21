@@ -72,7 +72,7 @@ func (u *userService) Login(req requests.LoginRequest) (*responses.UserResponse,
 
 	token, err := jwt.GenerateToken(user.ID)
 	if err != nil {
-		return nil, err
+		return nil, ErrGenerateToken
 	}
 
 	response := &responses.UserResponse{
@@ -111,7 +111,7 @@ func (u *userService) UpdateCurrentUser(id uint, updateData map[string]any) (*re
 	if password != nil {
 		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password.(string)), bcrypt.DefaultCost)
 		if err != nil {
-			return nil, err
+			return nil, ErrUpdateUser
 		}
 
 		updateData[constants.Password] = string(hashedPassword)
